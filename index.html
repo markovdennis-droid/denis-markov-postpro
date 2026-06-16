@@ -590,11 +590,27 @@
     <p class="section-label fade-in" data-en="Showreel" data-ru="Шоурил">Showreel</p>
 
     <div class="divider fade-in"></div>
-    <div class="video-placeholder fade-in" style="margin-bottom: 1.5px;">
-      <iframe src="https://www.youtube.com/embed/5Oxu5s3P2jc" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="video-placeholder fade-in" style="margin-bottom: 1.5px;" id="video1">
+      <div class="video-placeholder-content" style="cursor:pointer;" onclick="playVideo('video1','5Oxu5s3P2jc')">
+        <img src="showreel1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1rem;">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+          <span class="video-label">Showreel — Take 1 · 2024</span>
+        </div>
+      </div>
     </div>
-    <div class="video-placeholder fade-in" style="margin-top: 1.5px;">
-      <iframe src="https://www.youtube.com/embed/OKaC2eWO1SE" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="video-placeholder fade-in" style="margin-top: 1.5px;" id="video2">
+      <div class="video-placeholder-content" style="cursor:pointer;" onclick="playVideo('video2','OKaC2eWO1SE')">
+        <img src="showreel2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1rem;">
+          <div class="play-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+          <span class="video-label">Showreel — Take 2 · 2025–2026</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -733,6 +749,11 @@
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       el.innerHTML = el.getAttribute('data-' + lang);
     });
+  }
+
+  function playVideo(containerId, videoId) {
+    const c = document.getElementById(containerId);
+    c.innerHTML = '<iframe src="https://www.youtube.com/embed/' + videoId + '?autoplay=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>';
   }
 
   function loadVideo() {
