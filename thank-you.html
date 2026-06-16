@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — Denis Markov</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --gold: #C9A96E;
+    --dark: #0D0E12;
+    --dark2: #13151C;
+    --text: #E8E4DC;
+    --muted: #8A8680;
+    --border: rgba(201,169,110,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .checkmark {
+    width: 64px;
+    height: 64px;
+    border: 0.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .checkmark svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: draw 0.6s ease 0.3s forwards;
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    animation: slideUp 0.8s ease 0.2s both;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    animation: slideUp 0.8s ease 0.3s both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    max-width: 36ch;
+    line-height: 1.8;
+    margin: 0 auto 3rem;
+    animation: slideUp 0.8s ease 0.4s both;
+  }
+
+  .back-btn {
+    display: inline-block;
+    border: 0.5px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    transition: all 0.3s;
+    animation: slideUp 0.8s ease 0.5s both;
+  }
+
+  .back-btn:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .line {
+    width: 0.5px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    margin: 0 auto 2.5rem;
+    animation: fadeIn 1s ease 0.1s both;
+  }
+</style>
+</head>
+<body>
+
+  <div class="checkmark">
+    <svg viewBox="0 0 24 24">
+      <polyline points="4,12 9,17 20,7"/>
+    </svg>
+  </div>
+
+  <p class="eyebrow">Message received</p>
+
+  <h1>Thank you<br>for reaching <em>out.</em></h1>
+
+  <p>I will get back to you within 24 hours with the best team for your project.</p>
+
+  <a href="index.html" class="back-btn">Back to site</a>
+
+</body>
+</html>
