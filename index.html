@@ -288,31 +288,35 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    background: rgba(0,0,0,0.35);
   }
 
   .play-btn {
-    width: 64px;
-    height: 64px;
-    border: 0.5px solid var(--gold);
+    width: 80px;
+    height: 80px;
+    border: 2px solid #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s;
+    background: rgba(255,255,255,0.15);
   }
 
   .play-btn:hover {
     background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.08);
   }
 
   .play-btn:hover svg { fill: var(--dark); }
 
   .play-btn svg {
-    fill: var(--gold);
-    width: 20px;
-    height: 20px;
-    margin-left: 3px;
+    fill: #fff;
+    width: 28px;
+    height: 28px;
+    margin-left: 4px;
   }
 
   .video-label {
