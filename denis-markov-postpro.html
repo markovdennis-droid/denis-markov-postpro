@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denis Markov — Post-Production</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --dark: #0D0E12;
+    --dark2: #13151C;
+    --dark3: #1C1F2A;
+    --text: #E8E4DC;
+    --muted: #8A8680;
+    --border: rgba(201,169,110,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(13,14,18,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .lang-toggle {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .lang-btn {
+    background: none;
+    border: 0.5px solid var(--border);
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lang-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8rem 4rem 4rem;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    max-width: 40ch;
+    margin: 0 auto 3rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    border: 0.5px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    transition: all 0.3s;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 0.5px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    animation: scrollAnim 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollAnim {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 7rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 2.5rem;
+  }
+
+  .divider {
+    width: 3rem;
+    height: 0.5px;
+    background: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .about-quote {
+    border-left: 0.5px solid var(--gold);
+    padding-left: 1.5rem;
+  }
+
+  .about-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .about-quote cite {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 1rem;
+    font-style: normal;
+  }
+
+  /* SHOWREEL */
+  .showreel-section {
+    max-width: 100%;
+    padding: 0;
+    background: var(--dark2);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .showreel-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 7rem 4rem;
+  }
+
+  .video-placeholder {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background: var(--dark3);
+    border: 0.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  .video-placeholder-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border: 0.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .play-btn:hover {
+    background: var(--gold);
+  }
+
+  .play-btn:hover svg { fill: var(--dark); }
+
+  .play-btn svg {
+    fill: var(--gold);
+    width: 20px;
+    height: 20px;
+    margin-left: 3px;
+  }
+
+  .video-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    background: var(--dark);
+    padding: 2rem 1.75rem;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover { background: var(--dark3); }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--border);
+    margin-bottom: 0.75rem;
+    font-weight: 300;
+  }
+
+  .service-name {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    background: var(--dark2);
+    max-width: 100%;
+    padding: 0;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 7rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 300;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2rem;
+    padding-top: 0.1rem;
+  }
+
+  .step-text strong {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .step-text p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 8rem 4rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+    text-align: left;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-field label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .form-field input,
+  .form-field textarea {
+    background: var(--dark2);
+    border: 0.5px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-weight: 300;
+    resize: vertical;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: rgba(201,169,110,0.5);
+  }
+
+  .form-field textarea { min-height: 120px; }
+
+  .submit-btn {
+    background: none;
+    border: 0.5px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* FADE-IN */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section, .showreel-inner, .how-inner, .contact-section { padding: 4rem 1.5rem; }
+    .about-grid, .how-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Denis Markov</a>
+  <ul class="nav-links">
+    <li><a href="#about" data-en="About" data-ru="О нас">About</a></li>
+    <li><a href="#showreel" data-en="Showreel" data-ru="Шоурил">Showreel</a></li>
+    <li><a href="#services" data-en="Services" data-ru="Услуги">Services</a></li>
+    <li><a href="#contact" data-en="Contact" data-ru="Контакт">Contact</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ru')">RU</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow" data-en="Post-Production Freelance Community" data-ru="Фриланс-сообщество постпродакшн">Post-Production Freelance Community</p>
+    <h1 class="hero-title">We make what<br>you see in your<br>head <em>real.</em></h1>
+    <p class="hero-sub" data-en="Just a little better." data-ru="Чуть лучше, чем вы представляли.">Just a little better.</p>
+    <a href="#contact" class="hero-cta" data-en="Start a project" data-ru="Начать проект">Start a project</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-in">
+    <p class="section-label" data-en="About" data-ru="О нас">About</p>
+    <h2 class="section-title" data-en="Ten years in<br>film post-production." data-ru="Десять лет<br>в постпродакшн кино.">Ten years in<br>film post-production.</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p data-en="My name is Denis Markov. I work and live in Spain. I have been working as a post-production producer for ten years, with deep knowledge and extensive experience in film post-production." data-ru="Меня зовут Денис Марков. Я работаю и живу в Испании. Вот уже десять лет я работаю продюсером постпродакшна и обладаю глубокими знаниями и богатым опытом в этой области.">My name is Denis Markov. I work and live in Spain. I have been working as a post-production producer for ten years, with deep knowledge and extensive experience in film post-production.</p>
+      <p data-en="In 2019, I organized a freelance community of talented and reliable professionals with experience in film production: editors, sound engineers, colorists, DI supervisors." data-ru="В 2019 году я организовал фриланс-сообщество опытных специалистов: монтажёров, звукорежиссёров, колористов, DI-супервайзеров.">In 2019, I organized a freelance community of talented and reliable professionals with experience in film production: editors, sound engineers, colorists, DI supervisors.</p>
+      <p data-en="We work with all video and audio formats and are able to solve any technical and creative tasks for our clients of any size." data-ru="Мы работаем со всеми форматами видео и аудио и решаем любые технические и творческие задачи для клиентов любого масштаба.">We work with all video and audio formats and are able to solve any technical and creative tasks for our clients of any size.</p>
+    </div>
+    <div class="about-quote">
+      <p data-en="We make what you see in your head real. Just a little better." data-ru="Мы воплощаем то, что вы видите в своей голове. Только чуть лучше.">"We make what you see in your head real. Just a little better."</p>
+      <p style="margin-top:1.5rem; font-family:'Inter',sans-serif; font-size:0.82rem; color:var(--muted);" data-en="We went remote during the last global pandemic, and despite the challenges, successfully released several projects in film, advertising, and TV shows. We currently specialize in remote post-production." data-ru="Во время пандемии мы перешли в удалённый режим работы и успешно выпустили несколько проектов. Сейчас мы специализируемся на удалённом постпродакшне.">We went remote during the last global pandemic, and despite the challenges, successfully released several projects in film, advertising, and TV shows. We currently specialize in remote post-production.</p>
+      <cite>— Denis Markov</cite>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWREEL -->
+<div class="showreel-section" id="showreel">
+  <div class="showreel-inner">
+    <p class="section-label fade-in" data-en="Showreel" data-ru="Шоурил">Showreel</p>
+    <h2 class="section-title fade-in" data-en="We Are<br>Denis Markov" data-ru="Мы —<br>Денис Марков">We Are<br>Denis Markov</h2>
+    <div class="divider fade-in"></div>
+    <div class="video-placeholder fade-in" id="videoContainer">
+      <div class="video-placeholder-content">
+        <div class="play-btn" onclick="loadVideo()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <span class="video-label" data-en="Watch Showreel" data-ru="Смотреть шоурил">Watch Showreel</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="fade-in">
+    <p class="section-label" data-en="Services" data-ru="Услуги">Services</p>
+    <h2 class="section-title" data-en="What we do." data-ru="Что мы делаем.">What we do.</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="services-grid fade-in">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <div class="service-name" data-en="Editing" data-ru="Монтаж">Editing</div>
+      <div class="service-desc" data-en="Professional offline and online editing for film, advertising, and TV." data-ru="Профессиональный монтаж для кино, рекламы и телевидения.">Professional offline and online editing for film, advertising, and TV.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <div class="service-name" data-en="Colour Grading" data-ru="Цветокоррекция">Colour Grading</div>
+      <div class="service-desc" data-en="DI and colour grading by experienced colourists on professional systems." data-ru="DI и цветокоррекция от опытных колористов.">DI and colour grading by experienced colourists on professional systems.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <div class="service-name" data-en="Sound" data-ru="Звук">Sound</div>
+      <div class="service-desc" data-en="Sound recording, mixing, music composing, and synchronisation." data-ru="Запись звука, сведение, музыкальная композиция и синхронизация.">Sound recording, mixing, music composing, and synchronisation.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">04</div>
+      <div class="service-name" data-en="VFX & Motion" data-ru="VFX и моушн">VFX & Motion</div>
+      <div class="service-desc" data-en="Computer graphics, design, motion graphics, and compositing." data-ru="Компьютерная графика, дизайн, моушн-графика и композитинг.">Computer graphics, design, motion graphics, and compositing.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">05</div>
+      <div class="service-name" data-en="Mastering & DCP" data-ru="Мастеринг и DCP">Mastering & DCP</div>
+      <div class="service-desc" data-en="DCP creation, video mastering, conforming, and format conversion." data-ru="Создание DCP, видеомастеринг, конформинг и конвертация форматов.">DCP creation, video mastering, conforming, and format conversion.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">06</div>
+      <div class="service-name" data-en="Video Stock" data-ru="Видеостоки">Video Stock</div>
+      <div class="service-desc" data-en="Selection of video footage with purchasing of user licences." data-ru="Подбор видеоматериала с приобретением пользовательских лицензий.">Selection of video footage with purchasing of user licences.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">07</div>
+      <div class="service-name" data-en="Subtitling" data-ru="Субтитры">Subtitling</div>
+      <div class="service-desc" data-en="Professional subtitling and closed captions for all formats." data-ru="Профессиональные субтитры для всех форматов.">Professional subtitling and closed captions for all formats.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">08</div>
+      <div class="service-name" data-en="Coordination 24/7" data-ru="Координация 24/7">Coordination 24/7</div>
+      <div class="service-desc" data-en="Accompanying all stages of post-production around the clock via cloud servers and FTP." data-ru="Сопровождение всех этапов постпродакшна круглосуточно.">Accompanying all stages of post-production around the clock via cloud servers and FTP.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">09</div>
+      <div class="service-name" data-en="Remote Production" data-ru="Удалённый продакшн">Remote Production</div>
+      <div class="service-desc" data-en="Fully remote workflow — source converting, data exchange, full pipeline management." data-ru="Полностью удалённый рабочий процесс — конвертация, обмен данными, управление пайплайном.">Fully remote workflow — source converting, data exchange, full pipeline management.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="fade-in">
+      <p class="section-label" data-en="Process" data-ru="Процесс">Process</p>
+      <h2 class="section-title" data-en="How we<br>work together." data-ru="Как мы<br>работаем вместе.">How we<br>work together.</h2>
+      <div class="divider"></div>
+      <p style="font-size:0.85rem; color:var(--muted); line-height:1.8;" data-en="The post-production freelance community is open to all offers in all areas of the video production market." data-ru="Наше фриланс-сообщество открыто для предложений во всех сегментах рынка видеопроизводства.">The post-production freelance community is open to all offers in all areas of the video production market.</p>
+    </div>
+    <div class="steps fade-in">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-text">
+          <strong data-en="Get in touch" data-ru="Свяжитесь с нами">Get in touch</strong>
+          <p data-en="Choose the contact option and give a short description of your project." data-ru="Выберите способ связи и кратко опишите ваш проект.">Choose the contact option and give a short description of your project.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-text">
+          <strong data-en="We respond in 24h" data-ru="Ответим в течение 24 часов">We respond in 24h</strong>
+          <p data-en="I will get in touch with you and suggest the best team of professionals for your request." data-ru="Мы свяжемся с вами и предложим оптимальную команду специалистов.">I will get in touch with you and suggest the best team of professionals for your request.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-text">
+          <strong data-en="We deliver" data-ru="Доставляем результат">We deliver</strong>
+          <p data-en="Your project is completed remotely with full coordination and quality control at every stage." data-ru="Ваш проект выполняется удалённо с полным контролем качества на каждом этапе.">Your project is completed remotely with full coordination and quality control at every stage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div style="background: var(--dark);">
+  <div class="contact-section" id="contact">
+    <div class="fade-in">
+      <p class="section-label" data-en="Contact" data-ru="Контакт">Contact</p>
+      <h2 class="section-title" data-en="Let's talk about<br>your project." data-ru="Давайте поговорим<br>о вашем проекте.">Let's talk about<br>your project.</h2>
+      <div class="divider" style="margin: 0 auto 2.5rem;"></div>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-row">
+        <div class="form-field">
+          <label data-en="Name" data-ru="Имя">Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-field">
+          <label data-en="Email" data-ru="Email">Email</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-field">
+        <label data-en="Message" data-ru="Сообщение">Message</label>
+        <textarea placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button class="submit-btn" data-en="Send message" data-ru="Отправить">Send message</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2019–2025 Denis Markov</span>
+  <span style="color:var(--border);">Post-Production Freelance Community</span>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      if (b.textContent.trim().toLowerCase() === lang) b.classList.add('active');
+    });
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      el.innerHTML = el.getAttribute('data-' + lang);
+    });
+  }
+
+  function loadVideo() {
+    const url = prompt('Paste YouTube or Vimeo URL:');
+    if (!url) return;
+    let embedUrl = '';
+    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
+    const vm = url.match(/vimeo\.com\/(\d+)/);
+    if (yt) embedUrl = 'https://www.youtube.com/embed/' + yt[1] + '?autoplay=1';
+    else if (vm) embedUrl = 'https://player.vimeo.com/video/' + vm[1] + '?autoplay=1';
+    if (embedUrl) {
+      const c = document.getElementById('videoContainer');
+      c.innerHTML = '<iframe src="' + embedUrl + '" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+    }
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
