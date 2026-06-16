@@ -700,8 +700,7 @@
       <h2 class="section-title" data-en="Let's talk about<br>your project." data-ru="Давайте поговорим<br>о вашем проекте.">Let's talk about<br>your project.</h2>
       <div class="divider" style="margin: 0 auto 2.5rem;"></div>
     </div>
-    <form class="contact-form fade-in" action="https://formspree.io/f/xbdebkgw" method="POST">
-      <input type="hidden" name="_next" value="https://markovdennis-droid.github.io/denis-markov-postpro/thank-you.html">
+    <form class="contact-form fade-in" id="contactForm">
       <div class="form-row">
         <div class="form-field">
           <label data-en="Name" data-ru="Имя">Name</label>
@@ -716,7 +715,7 @@
         <label data-en="Message" data-ru="Сообщение">Message</label>
         <textarea name="message" placeholder="Tell me about your project..." required></textarea>
       </div>
-      <button type="submit" class="submit-btn" data-en="Send message" data-ru="Отправить">Send message</button>
+      <button type="submit" class="submit-btn" id="submitBtn" data-en="Send message" data-ru="Отправить">Send message</button>
     </form>
   </div>
 </div>
@@ -762,6 +761,31 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '...';
+    btn.disabled = true;
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://formspree.io/f/xbdebkgw', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        window.location.href = 'thank-you.html';
+      } else {
+        btn.textContent = 'Error. Try again.';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Error. Try again.';
+      btn.disabled = false;
+    }
+  });
 </script>
 </body>
 </html>
