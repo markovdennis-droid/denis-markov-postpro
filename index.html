@@ -588,7 +588,7 @@
 <div class="showreel-section" id="showreel">
   <div class="showreel-inner">
     <p class="section-label fade-in" data-en="Showreel" data-ru="Шоурил">Showreel</p>
-    <h2 class="section-title fade-in" data-en="We Are<br>Denis Markov" data-ru="Мы —<br>Денис Марков">We Are<br>Denis Markov</h2>
+
     <div class="divider fade-in"></div>
     <div class="video-placeholder fade-in" id="videoContainer">
       <div class="video-placeholder-content">
@@ -700,23 +700,23 @@
       <h2 class="section-title" data-en="Let's talk about<br>your project." data-ru="Давайте поговорим<br>о вашем проекте.">Let's talk about<br>your project.</h2>
       <div class="divider" style="margin: 0 auto 2.5rem;"></div>
     </div>
-    <div class="contact-form fade-in">
+    <form class="contact-form fade-in" action="https://formspree.io/f/xbdebkgw" method="POST">
       <div class="form-row">
         <div class="form-field">
           <label data-en="Name" data-ru="Имя">Name</label>
-          <input type="text" placeholder="Your name">
+          <input type="text" name="name" placeholder="Your name" required>
         </div>
         <div class="form-field">
           <label data-en="Email" data-ru="Email">Email</label>
-          <input type="email" placeholder="your@email.com">
+          <input type="email" name="email" placeholder="your@email.com" required>
         </div>
       </div>
       <div class="form-field">
         <label data-en="Message" data-ru="Сообщение">Message</label>
-        <textarea placeholder="Tell me about your project..."></textarea>
+        <textarea name="message" placeholder="Tell me about your project..." required></textarea>
       </div>
-      <button class="submit-btn" data-en="Send message" data-ru="Отправить">Send message</button>
-    </div>
+      <button type="submit" class="submit-btn" data-en="Send message" data-ru="Отправить">Send message</button>
+    </form>
   </div>
 </div>
 
